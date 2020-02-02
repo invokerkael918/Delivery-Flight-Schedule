@@ -3,22 +3,24 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import model.Order;
+
 public class Loader {
     private JSONObject jsonObject;
     private JSONParser parser;
     private String address;
     private ArrayList<Order> orderList;
 
-    public Loader(String address){
+    public Loader(String address) {
         this.address = address;
     }
 
-    public void load(){
+    public void load() {
         try {
             System.out.println(address);
             parser = new JSONParser();
@@ -27,14 +29,14 @@ public class Loader {
                     address));
             JSONObject jsonObject = (JSONObject) obj;
             Iterator<String> keys = jsonObject.keySet().iterator();
-            while (keys.hasNext()){
+            while (keys.hasNext()) {
                 String key = keys.next();
-                if (jsonObject.get(key) instanceof JSONObject){
+                if (jsonObject.get(key) instanceof JSONObject) {
                     JSONObject value = (JSONObject) jsonObject.get(key);
                     Order order = new Order();
                     order.setCode(key);
                     order.setDestination(value.get("destination").toString());
-                    order.setPriority(Integer.parseInt(key.substring(key.length()-3)));
+                    order.setPriority(Integer.parseInt(key.substring(key.length() - 3)));
                     orderList.add(order);
                 }
             }
@@ -45,11 +47,11 @@ public class Loader {
         }
     }
 
-    public int getSize(){
+    public int getSize() {
         return orderList.size();
     }
 
-    public ArrayList<Order> getOrderList(){
+    public ArrayList<Order> getOrderList() {
         return orderList;
     }
 }

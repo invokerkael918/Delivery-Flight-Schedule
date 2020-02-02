@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import model.Order;
+import model.Schedule;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -14,10 +15,16 @@ public class Main {
     public static void main(String[] args) {
 
         //Use Story one
+        Schedules schedules = new Schedules();
+        ArrayList<Schedule> schedulesList = schedules.GetSchedules();
+        for (Schedule s: schedulesList) {
+            System.out.println("Flight: "+ s.getFlightNumber()+", "+"departure: "+s.getDeparture()+", "+"arrival: "+s.getDestination()+", "+"day: "+s.getDate());
+        }
 
-
+        //Use Story two
         final int capacity = 20;
-        String address = "/Users/yuancao/Downloads/coding-assigment-orders.json";
+        String address = "C:\\Users\\cy379\\Downloads\\coding-assigment-orders.json";
+
         Loader loader = new Loader(address);
         loader.load();
         int size = loader.getSize();

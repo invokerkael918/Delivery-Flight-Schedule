@@ -9,6 +9,14 @@ public class Schedule {
     private String destination;
     private int date;
 
+    public Schedule(int flightNumber, String departure,String destination,int date){
+        this.flightNumber = flightNumber;
+        this.departure = departure;
+        this.destination = destination;
+        this.date = date;
+    }
+
+
     public int getFlightNumber() {
         return flightNumber;
     }

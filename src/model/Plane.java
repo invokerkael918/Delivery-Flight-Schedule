@@ -11,17 +11,17 @@ public class Plane {
 
     private ArrayList<Order> orders;
 
-    public Plane(int flight_Number,Schedule schedule){
+    public Plane(int flight_Number, Schedule schedule) {
         this.flight_Number = flight_Number;
         this.capacity = 20;
         this.schedule = schedule;
     }
 
-    public void load(Order order){
+    public void load(Order order) {
         this.orders.add(order);
     }
 
-    public boolean ableToload(){
+    public boolean ableToload() {
         return this.orders.size() < this.capacity;
     }
 

@@ -39,7 +39,7 @@ public class Order {
         this.schedule = schedule;
     }
 
-    public boolean isScheduled(){
+    public boolean isScheduled() {
         return this.schedule != null;
     }
 }
