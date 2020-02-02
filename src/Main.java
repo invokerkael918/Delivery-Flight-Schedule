@@ -23,7 +23,8 @@ public class Main {
 
         //Use Story two
         final int capacity = 20;
-        String address = "C:\\Users\\cy379\\Downloads\\coding-assigment-orders.json";
+        //String address = "C:\\Users\\cy379\\Downloads\\coding-assigment-orders.json";
+        String address = "/Users/yuancao/Downloads/coding-assigment-orders.json";
 
         Loader loader = new Loader(address);
         loader.load();
