@@ -26,8 +26,8 @@ public class Main {
 
         //Use Story two
         final int capacity = 20;
-        //String address = "C:\\Users\\cy379\\Downloads\\coding-assigment-orders.json";
-        String address = "/Users/yuancao/Downloads/coding-assigment-orders.json";
+        String address = "C:\\Users\\cy379\\Downloads\\coding-assigment-orders.json";
+        //String address = "/Users/yuancao/Downloads/coding-assigment-orders.json";
 
         Loader loader = new Loader(address);
         loader.load();
@@ -35,15 +35,23 @@ public class Main {
 
         HashMap<String, ArrayList<Order>> Destination_to_List = loader.getDestination_to_Orderlist();
         Iterator iterator = Destination_to_List.entrySet().iterator();
-        while(iterator.hasNext()){
-            Map.Entry me2 = (Map.Entry) iterator.next();
-            ArrayList<Order> orderList = loader.getOrderList((String) me2.getKey());
-            setOrder(orderList);
-            //System.out.println((String) me2.getKey() + " " + orderList.size());
-            for(Order order: orderList){
+//        while(iterator.hasNext()){
+//            Map.Entry me2 = (Map.Entry) iterator.next();
+//            ArrayList<Order> orderList = loader.getOrderList((String) me2.getKey());
+//            System.out.println((String) me2.getKey() + " " + orderList.size());
+//            for(Order order: orderList){
 //                System.out.print(order.getCode() + " ");
 //                System.out.print(order.getDestination() + " ");
 //                System.out.println(order.getPriority());
+//            }
+//        }
+        while(iterator.hasNext()){
+            Map.Entry me2 = (Map.Entry) iterator.next();
+            ArrayList<Order> cityOrderList = loader.getOrderList((String) me2.getKey());
+            if(cityOrderList.size() >=20){
+                setOrder(cityOrderList);
+            }
+            for(Order order: cityOrderList){
                 if (order.isScheduled()){
                     System.out.print("order: "+order.getCode() + ", ");
                     System.out.print("Flight number: " + order.getSchedule().getFlightNumber()+", ");
@@ -51,28 +59,25 @@ public class Main {
                     System.out.print("Arrvial: " + order.getDestination() + ", ");
                     System.out.print("Day: " + order.getSchedule().getDate());
                     System.out.println(" ");
-
-
                 }
             }
         }
-    }
-    public static void setOrder(ArrayList<Order> orderlist){
-        if (orderlist.size() >= 20){
-            for (int i = 0; i < 20; i++) {
-                Order order = orderlist.get(i);
-                Schedule schedule = new Schedule(flight_number,"YUL",order.getDestination(),date);
-                order.setSchedule(schedule);
-            }
-        }
-        else{
-            for (Order order:
-                    orderlist) {
-                Schedule schedule = new Schedule(flight_number,"YUL",order.getDestination(),date);
-                order.setSchedule(schedule);
-            }
+        //print not scheduled
+        ArrayList<Order> allOrderList = loader.getUnScheduledOrderList();
+        for(Order order: allOrderList){
+            System.out.print("order: "+order.getCode() + ", ");
+            System.out.println("Flight number: " + "Not scheduled ");
         }
 
+
+
+    }
+    private static void setOrder(ArrayList<Order> orderlist){
+        for (int i = 0; i < 20; i++) {
+            Order order = orderlist.get(i);
+            Schedule schedule = new Schedule(flight_number,"YUL",order.getDestination(),date);
+            order.setSchedule(schedule);
+        }
 
         if (flight_number == 3){
             date++;

@@ -39,6 +39,7 @@ public class Loader {
                     Order order = new Order(priority,key,destination);
                     if (!Destination_to_Orderlist.containsKey(destination)){
                         Destination_to_Orderlist.put(destination,new ArrayList<>());
+                        Destination_to_Orderlist.get(destination).add(order);
                     }
                     else{
                         Destination_to_Orderlist.get(destination).add(order);
@@ -62,6 +63,17 @@ public class Loader {
     }
     public ArrayList<Order> getOrderList() {
         return this.orderList;
+    }
+
+    public ArrayList<Order> getUnScheduledOrderList() {
+        ArrayList<Order> UnscheduledList = new ArrayList<>();
+        for (Order order:
+             this.orderList) {
+            if (!order.isScheduled()){
+                UnscheduledList.add(order);
+            }
+        }
+        return UnscheduledList;
     }
 
     public ArrayList<Order> getOrderList(String Destination) {
