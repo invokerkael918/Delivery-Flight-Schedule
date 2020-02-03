@@ -2,9 +2,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import model.Order;
+import model.Plane;
 import model.Schedule;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -13,7 +16,7 @@ import org.json.simple.parser.ParseException;
 
 public class Main {
     public static void main(String[] args) {
-
+        int FlightNumber = 1;
         //Use Story one
         Schedules schedules = new Schedules();
         ArrayList<Schedule> schedulesList = schedules.GetSchedules();
@@ -30,12 +33,52 @@ public class Main {
         loader.load();
         int size = loader.getSize();
 
-        ArrayList<Order> orderList = loader.getOrderList();
-        for(Order order: orderList){
-            System.out.print(order.getCode() + " ");
-            System.out.print(order.getDestination() + " ");
-            System.out.println(order.getPriority());
+        HashMap<String, ArrayList<Order>> Destination_to_List = loader.getDestination_to_Orderlist();
+        Iterator iterator = Destination_to_List.entrySet().iterator();
+        while(iterator.hasNext()){
+            Map.Entry me2 = (Map.Entry) iterator.next();
+            ArrayList<Order> orderList = loader.getOrderList((String) me2.getKey());
+            setOrder(orderList);
+            //System.out.println((String) me2.getKey() + " " + orderList.size());
+            for(Order order: orderList){
+//                System.out.print(order.getCode() + " ");
+//                System.out.print(order.getDestination() + " ");
+//                System.out.println(order.getPriority());
+                if (order.isScheduled()){
+                    System.out.print("order: "+order.getCode() + ", ");
+                    System.out.print("Flight number: " + order.getSchedule().getFlightNumber()+", ");
+                    System.out.print("Departure: " + order.getSchedule().getDeparture()+ ", ");
+                    System.out.print("Arrvial: " + order.getDestination() + ", ");
+                    System.out.print("Day: " + order.getSchedule().getDate());
+                    System.out.println(" ");
+
+
+                }
+            }
+        }
+    }
+    public static void setOrder(ArrayList<Order> orderlist){
+        if (orderlist.size() >= 20){
+            for (int i = 0; i < 20; i++) {
+                Order order = orderlist.get(i);
+                Schedule schedule = new Schedule(flight_number,"YUL",order.getDestination(),date);
+                order.setSchedule(schedule);
+            }
+        }
+        else{
+            for (Order order:
+                    orderlist) {
+                Schedule schedule = new Schedule(flight_number,"YUL",order.getDestination(),date);
+                order.setSchedule(schedule);
+            }
         }
 
+
+        if (flight_number == 3){
+            date++;
+        }
+        flight_number++;
     }
+    private static int date = 1;
+    private static int flight_number = 1;
 }
