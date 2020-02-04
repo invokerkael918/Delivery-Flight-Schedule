@@ -9,6 +9,10 @@ public class Schedule {
     private String destination;
     private int date;
 
+
+
+    private boolean isLoaded;
+
     public Schedule(int flightNumber, String departure,String destination,int date){
         this.flightNumber = flightNumber;
         this.departure = departure;
@@ -48,6 +52,10 @@ public class Schedule {
     public void setDate(int date) {
         this.date = date;
     }
+
+    public boolean isLoaded() { return isLoaded; }
+
+    public void setLoaded(boolean loaded) { isLoaded = loaded; }
 
     @Override
     public String toString() {

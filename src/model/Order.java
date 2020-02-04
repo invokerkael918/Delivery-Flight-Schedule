@@ -5,7 +5,7 @@ public class Order implements Comparable {
     private int priority;
     private String code;
     private String destination;
-    private Schedule schedule;
+    private Schedule schedule = null;
 
     public Order(int priority, String code, String destination) {
         this.priority = priority;
